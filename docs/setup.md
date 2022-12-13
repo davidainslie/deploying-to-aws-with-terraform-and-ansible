@@ -116,9 +116,15 @@ aws --profile acloudguru iam attach-role-policy --role-name terraform-ec2-role -
 
 Now we can attach this role to any running EC2 instance.
 
-The above is very manual and error prone. We can marginally improve this by instead running [terraform-aws.sh](../terraform/terraform-aws.sh).
-
-To teardown these resources:
-```shell
-
-```
+> The above is very manual and error prone. We can marginally improve this by instead running [terraform-aws.sh](../terraform/terraform-aws.sh):
+> ```shell
+> source ./terraform-aws-up.sh
+> ```
+> where we include `source` to expose created environment variables available to the `teardown` script.
+> 
+> And to [teardown](../terraform/terraform-aws-down.sh) the resources:
+> ```shell
+> ./terraform-aws-down.sh
+> ```
+> 
+> But really, even the above should itself be terraformed.

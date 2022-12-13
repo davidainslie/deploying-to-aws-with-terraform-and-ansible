@@ -6,7 +6,10 @@ export POLICY_ARN=$(aws --profile acloudguru --no-cli-auto-prompt iam create-pol
 
 aws --profile acloudguru iam create-user --user-name terraform-user
 
-aws --profile acloudguru --no-cli-auto-prompt iam create-access-key --user-name terraform-user --query 'AccessKey.[AccessKeyId, SecretAccessKey]'
+KEYS=$(aws --profile acloudguru --no-cli-auto-prompt iam create-access-key --user-name terraform-user --query 'AccessKey.{ "aws-access-key-id": AccessKeyId, "aws-secret-access-key": SecretAccessKey }' | jq -r 'to_entries[] | "\(.key) = \"\(.value)\""')
+
+echo $KEYS > secrets.tfvars
+echo aws-region = \"us-east-1\" >> secrets.tfvars
 
 aws --profile acloudguru iam attach-user-policy --user-name terraform-user --policy-arn $POLICY_ARN
 
