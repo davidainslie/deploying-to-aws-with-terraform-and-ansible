@@ -12,3 +12,5 @@ aws --profile acloudguru iam detach-role-policy --role-name terraform-ec2-role -
 aws --profile acloudguru iam delete-role --role-name terraform-ec2-role
 
 aws --profile acloudguru iam delete-policy --policy-arn $POLICY_ARN
+
+aws --profile acloudguru s3 rb s3://terraform-state-backwards-bucket --force
