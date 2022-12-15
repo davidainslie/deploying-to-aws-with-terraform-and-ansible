@@ -35,12 +35,14 @@ terraform {
 }
 
 provider "aws" {
+  shared_credentials_files = [".credentials"]
   profile = var.profile
   region = var.region-master
   alias = "region-master"
 }
 
 provider "aws" {
+  shared_credentials_files = [".credentials"]
   profile = var.profile
   region = var.region-worker
   alias = "region-worker"
