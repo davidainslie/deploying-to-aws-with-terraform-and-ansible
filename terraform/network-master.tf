@@ -49,3 +49,34 @@ resource "aws_subnet" "subnet-2" {
     Name = "subnet-2-master"
   }
 }
+
+# Create route table in us-east-1
+resource "aws_route_table" "internet-route" {
+  provider = aws.region-master
+  vpc_id = aws_vpc.vpc-master.id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.igw.id
+  }
+
+  route {
+    cidr_block = "192.168.1.0/24"
+    vpc_peering_connection_id = aws_vpc_peering_connection.us-east-1-peer-us-west-2.id
+  }
+
+  lifecycle {
+    ignore_changes = all
+  }
+
+  tags = {
+    Name = "master-region-rt"
+  }
+}
+
+# Overwrite default route table of VPC (master) with our route table entires
+resource "aws_main_route_table_association" "set-master-default-rt-assoc" {
+  provider = aws.region-master
+  vpc_id         = aws_vpc.vpc-master.id
+  route_table_id = aws_route_table.internet-route.id
+}

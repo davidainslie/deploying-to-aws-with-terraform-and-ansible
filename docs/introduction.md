@@ -25,3 +25,6 @@ Ansible:
 
 We will build a distributed, multi-region, Jenkins CI/CD deployement:
 ![Architecture](images/architecture.jpg)
+
+Security groups:
+![Security groups](images/architecture-security-groups.jpg)
