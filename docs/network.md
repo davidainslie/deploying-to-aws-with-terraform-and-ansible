@@ -19,3 +19,18 @@ We can manually generate a key/pair:
 ssh-keygen -t rsa
 ```
 but we'll apply this within our terraform, [instances.tf](../terraform/instances.tf).
+
+## Deploying our Apps - Jenkins
+
+```shell
+time terraform apply
+```
+
+SSH onto EC2:
+```shell
+# Master
+ssh -i jenkins.pem ec2-user@44.202.199.98
+
+# Worker
+ssh -i jenkins.pem ec2-user@54.245.205.234
+```
