@@ -1,4 +1,5 @@
 .credentials
+*.pem
 
 ### JEnv template
 # JEnv local Java version configuration file
