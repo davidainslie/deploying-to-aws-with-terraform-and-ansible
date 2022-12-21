@@ -22,6 +22,10 @@ brew install ansible
 brew install httpie
 ```
 
+```shell
+pip3 install boto3
+```
+
 A helper to Ansible (though already available in this repository as [ansible.cfg](../ansible/ansible.cfg)):
 ```shell
 # Within ansible directory

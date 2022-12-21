@@ -10,3 +10,4 @@
 - [Providers](docs/providers.md)
 - [Network](docs/network.md)
 - [Provisioners](docs/provisioners.md)
+- [Load Balancing](docs/load-balancing.md)
