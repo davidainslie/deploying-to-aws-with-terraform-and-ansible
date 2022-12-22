@@ -18,7 +18,7 @@ keyed_groups:
   #  Ansible tag variable name as follows: tag_Name_acloudguru_machine
   # which can then be passed as a variable value for the host via -e flag
   - key: tags
-    prefix: tag-Name-
+    prefix: tag
   #
   # the following keyed groups are from the aws url:
   # https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-instances.html#options   
