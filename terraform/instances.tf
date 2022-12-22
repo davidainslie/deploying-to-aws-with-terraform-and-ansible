@@ -56,9 +56,7 @@ resource "aws_instance" "jenkins-master" {
   provisioner "local-exec" {
     command = <<-EOT
       aws --profile ${var.profile} ec2 wait instance-status-ok --region ${var.region-master} --instance-ids ${self.id}
-      cd ../ansible
       ansible-playbook --extra-vars 'hosts=tag_Name_${self.tags.Name}' jenkins-master-sample.yml
-      cd -
     EOT
   }
 }
@@ -90,9 +88,7 @@ resource "aws_instance" "jenkins-worker-oregon" {
   provisioner "local-exec" {
     command = <<-EOT
       aws --profile ${var.profile} ec2 wait instance-status-ok --region ${var.region-worker} --instance-ids ${self.id}
-      cd ../ansible
       ansible-playbook --extra-vars 'hosts=tag_Name_${self.tags.Name}' jenkins-worker-sample.yml
-      cd -
     EOT
   }
 }
