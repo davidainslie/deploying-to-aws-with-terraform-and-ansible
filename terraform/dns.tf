@@ -36,3 +36,8 @@ resource "aws_route53_record" "jenkins" {
     evaluate_target_health = true
   }
 }
+
+output "url" {
+  value = aws_route53_record.jenkins.fqdn
+}
+# E.g. in browser, navigate to: jenkins.cmcloudlab1625.info
