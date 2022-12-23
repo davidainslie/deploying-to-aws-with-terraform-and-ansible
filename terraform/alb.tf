@@ -33,11 +33,45 @@ resource "aws_lb_target_group" "app-lb-tg" {
   }
 }
 
+/*
+Original version - Without ACM certificate we just forwarded to port 80 of our app - Now we will redirect to port 443
 resource "aws_lb_listener" "jenkins-listener-http" {
   provider = aws.region-master
   load_balancer_arn = aws_lb.app-lb.arn
   port = var.webserver-port
   protocol = "HTTP"
+
+  default_action {
+    type = "forward"
+    target_group_arn = aws_lb_target_group.app-lb-tg.id
+  }
+}
+*/
+resource "aws_lb_listener" "jenkins-listener-http" {
+  provider = aws.region-master
+  load_balancer_arn = aws_lb.app-lb.arn
+  port = var.webserver-port
+  protocol = "HTTP"
+
+  default_action {
+    type = "redirect"
+
+    redirect {
+      port = "443"
+      protocol = "HTTPS"
+      status_code = "HTTP_301"
+    }
+  }
+}
+
+/* With the new version above to redirect, we now need a listener for port 443 */
+resource "aws_lb_listener" "jenkins-listener-https" {
+  provider = aws.region-master
+  load_balancer_arn = aws_lb.app-lb.arn
+  ssl_policy = "ELBSecurityPolicy-2016-08"
+  port = "443"
+  protocol = "HTTPS"
+  certificate_arn = aws_acm_certificate.jenkins-lb-https.arn
 
   default_action {
     type = "forward"
